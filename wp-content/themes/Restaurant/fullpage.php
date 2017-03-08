@@ -7,6 +7,7 @@
  * and that other 'pages' on your WordPress site may use a
  * different template.
  *
+ Template name: Fullpage
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
  * @package Fabthemes
@@ -23,7 +24,7 @@ get_header(); ?>
 </div>
 
 <div class="container"> <div class="row"> 
-	<div class="col-md-8"> 
+	<div class="col-md-12"> 
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
@@ -43,7 +44,5 @@ get_header(); ?>
 		</main><!-- #main -->
 	</div><!-- #primary -->
 	</div>
-<?php
-get_sidebar(); ?>
 </div></div>
 <?php get_footer();

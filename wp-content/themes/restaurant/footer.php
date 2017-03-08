@@ -2,36 +2,35 @@
 /**
  * The template for displaying the footer.
  *
- * Contains footer content and the closing of the
- * #main and #page div elements.
+ * Contains the closing of the #content div and all content after.
  *
- * @package WordPress
- * @subpackage Twenty_Twelve
- * @since Twenty Twelve 1.0
+ * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
+ *
+ * @package Fabthemes
  */
+
 ?>
-	</div><!-- #main .wrapper -->
-	<footer id="colophon" role="contentinfo">
-    <?php //if ( ! is_404() ) : ?>
-        <div id="footer-widgets" class="widget-area three">
-            <?php for( $i=5; $i<8; $i++ ) :
-							$sidebar = 'sidebar-' . $i;
-							$footer_widget = 'Footer Widget ' . ( $i-4 );
-							if (!dynamic_sidebar($sidebar)) : //show informative text if no widegt?>
-								<div class="widget">
-                <div class="widget-title"><h3><?php _e( $footer_widget, 'restaurant' ); ?></h3></div>
-                <div class="textwidget"><?php _e( 'Footer Widget ' . ($i-4) . ' : to edit please go to Appearance > Widgets. Title is also manageable from widgets as well.', 'restaurant'); ?></div>
-            
-								</div><!-- end of .widget-wrapper -->
-							<?php endif; //end of home-widget-1 ?>
-						<?php endfor; ?>
-        </div><!-- #footer-widgets -->	
-	
-		<div class="site-info">
-			<a href="<?php echo esc_url( admin_url() ); ?>">Admin |</a> <a href="<?php echo esc_url( __( 'http://www.designpromote.co.uk/', 'restaurant' ) ); ?>" title="<?php esc_attr_e( 'Theme design by Designpromote.co.uk', 'restaurant' ); ?>"><?php printf( __( 'Design by %s', 'restaurant' ), 'Designpromote.co.uk' ); ?></a>
-		</div><!-- .site-info -->
+
+	</div><!-- #content -->
+	<div id="footer-widgets">
+		<div class="container"> <div class="row">
+			<?php dynamic_sidebar( 'footerbar' ); ?>
+			<div class="clear"></div>
+		</div></div>
+	</div>
+	<footer id="colophon" class="site-footer" role="contentinfo">
+		<div class="container"> <div class="row"> 
+			<div class="col-md-12">
+				<div class="site-info">
+				Copyright &copy; <?php echo date('Y');?> <a href="<?php bloginfo('url'); ?>" title="<?php bloginfo('name'); ?>"><?php bloginfo('name'); ?></a> - <?php bloginfo('description'); ?> <br>
+				<?php fflink(); ?> | <a href="http://fabthemes.com/<?php echo FT_scope::tool()->themeName ?>/" ><?php echo FT_scope::tool()->themeName ?> WordPress Theme</a>
+				</div><!-- .site-info -->
+			</div>	
+		</div></div>		
 	</footer><!-- #colophon -->
 </div><!-- #page -->
+
 <?php wp_footer(); ?>
+
 </body>
 </html>
