@@ -4,46 +4,67 @@
  *
  * This is the template that displays all pages by default.
  * Please note that this is the WordPress construct of pages
- * and that other 'pages' on your WordPress site may use a
+ * and that other 'pages' on your WordPress site will use a
  * different template.
  *
- * @link https://codex.wordpress.org/Template_Hierarchy
- *
- * @package Fabthemes
+ * @package WordPress
+ * @subpackage Twenty_Twelve
+ * @since Twenty Twelve 1.0
  */
 
 get_header(); ?>
+	<?php if( is_front_page() && 'page' == get_option( 'show_on_front' )  ): ?>
+	<?php remove_filter ('the_content', 'wpautop'); ?>
+	<div class="flexslider" style="display:block;">
+	<ul class="slides">
+		<?php
+		global $wpdb;
+		$select_post_type = "SELECT post_excerpt, guid FROM $wpdb->posts WHERE post_type = 'slider'";
+		$sliders = $wpdb->get_results( $select_post_type, ARRAY_A);
+		if( !empty( $sliders ) ):
+			foreach( $sliders as $slider ) {
+				printf( '<li>' );
+				printf( '<img src="%s" />', $slider['guid'] );
+				if( !empty( $slider['post_excerpt'] ) ) printf( '<h2 class="flex-caption">%s</h2>', $slider['post_excerpt'] );
+				printf( '</li>' );
+			}
+		else: 
+		?>			
+		<li>
+			<img alt="znslider" src="<?php echo get_stylesheet_directory_uri() . '/images/chinese-restaurant.jpg'; ?>" />
+			<h2 class="flex-caption">Cantonese restaurant in Edinburgh.</h2>
+		</li>
+		<li>
+			<img alt="znslider" src="<?php echo get_stylesheet_directory_uri() . '/images/indian-restaurant.jpg'; ?>" />
+			<h2 class="flex-caption">Indian restaurant in Edinburgh's high street.</h2>
+		</li>
+		<?php
+		endif;
+		?>
+	</ul>
+	</div> <!-- fexslider -->
 
-<div class="top-header">
-	<div class="container"> <div class="row">
-		<div class="col-md-12">
-			<h1> <?php the_title(); ?></h1>
+	<div id="primary" class="site-content front-page">
+		<div id="content" role="main">
+			<?php //while( have_posts() ) : the_post(); ?>
+			<?php //get_template_part( 'content', 'page' ); ?>
+			<?php //endwhile; ?>
+
 		</div>
-	</div></div>
-</div>
-
-<div class="container"> <div class="row"> 
-	<div class="col-md-8"> 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
-
-			<?php
-			while ( have_posts() ) : the_post();
-
-				get_template_part( 'template-parts/content', 'page' );
-
-				// If comments are open or we have at least one comment, load up the comment template.
-				if ( comments_open() || get_comments_number() ) :
-					comments_template();
-				endif;
-
-			endwhile; // End of the loop.
-			?>
-
-		</main><!-- #main -->
 	</div><!-- #primary -->
-	</div>
-<?php
-get_sidebar(); ?>
-</div></div>
-<?php get_footer();
+<?php get_sidebar('front'); ?>
+
+	<?php else: ?>
+	<div id="primary" class="site-content">
+		<div id="content" role="main">
+
+			<?php while ( have_posts() ) : the_post(); ?>
+				<?php get_template_part( 'content', 'page' ); ?>
+				<?php //comments_template( '', true ); ?>
+			<?php endwhile; // end of the loop. ?>
+
+		</div><!-- #content -->
+	</div><!-- #primary -->
+<?php get_sidebar(); ?>
+<?php endif; ?>
+<?php get_footer(); ?>
